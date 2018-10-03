@@ -40,14 +40,18 @@ while True:
                 sys.exit(0)
             payload += b"!"             # make emphatic!
             framedSend(sock, payload, debug)
-            if (len(payload)>100): #check if payload is lager than 100
-                print ("Message to large")
+            if (len(payload)>100): #check if payloads length is lager than 100
+                print ("Message too large")
                 sock.close()
             else: #write to a file in the server
                 messageLines.append(payload.decode())
-                outputFile = open("myOutputFile.txt", 'w')
-                for line in messageLines:
-                    outputFile.write(line + '\n')
-                outputFile.close()
-                print ("recieved: ", payload)
+                try:
+                    outputFile = open("myRecievedMsg.txt", 'w')
+                    
+                    for line in messageLines:
+                        outputFile.write(line + '\n')
+                    outputFile.close()
+                    print ("recieved: ", payload)
+                except IOError:
+                    print("Something went wrong")
     sock.close()

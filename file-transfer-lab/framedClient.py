@@ -8,13 +8,11 @@ import params
 
 from framedSock import framedSend, framedReceive
 
-
 switchesVarDefaults = (
     (('-s', '--server'), 'server', "127.0.0.1:50000"),
     (('-d', '--debug'), "debug", False), # boolean (set if present)
     (('-?', '--usage'), "usage", False), # boolean (set if present)
     )
-
 
 progname = "framedClient"
 paramMap = params.parseParams(switchesVarDefaults)
@@ -23,8 +21,6 @@ server, usage, debug  = paramMap["server"], paramMap["usage"], paramMap["debug"]
 
 if usage:
     params.usage()
-
-
 try:
     serverHost, serverPort = re.split(":", server)
     serverPort = int(serverPort)
@@ -56,12 +52,15 @@ if s is None:
     print('could not open socket')
     sys.exit(1)
 
-inputFile = open("myInfo.txt", 'rb')
-message = inputFile.read(1024).decode()
-message = message.strip()
-message = str.encode(message)
-framedSend(s, message, debug) 
-inputFile.close()
-
-print("sent:", message)
-print("received:", framedReceive(s, debug))
+try: #open input file
+    inputFile = open("mySendMsg.txt", 'rb')
+    message = inputFile.read(1024).decode() #remove newline \n
+    message = message.strip()
+    message = str.encode(message) #encode back to bytes
+    framedSend(s, message, debug) #send the message from the file
+    inputFile.close()
+    print("sent:", message)
+    print("received:", framedReceive(s, debug))
+    
+except IOError:
+    print("File does not exist in this directory")
