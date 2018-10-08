@@ -16,6 +16,7 @@ switchesVarDefaults = (
 
 progname = "framedClient"
 paramMap = params.parseParams(switchesVarDefaults)
+responds = 0
 
 server, usage, debug  = paramMap["server"], paramMap["usage"], paramMap["debug"]
 
@@ -51,7 +52,11 @@ for res in socket.getaddrinfo(serverHost, serverPort, socket.AF_UNSPEC, socket.S
 if s is None:
     print('could not open socket')
     sys.exit(1)
-
+    
+    print("Please choose an option:\n")
+    responds = input()
+    print(responds)
+    
 try: #open input file
     inputFile = open("mySendMsg.txt", 'rb')
     message = inputFile.read(1024).decode() #remove newline \n

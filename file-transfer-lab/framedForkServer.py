@@ -6,7 +6,7 @@ import params
 messageLines= list()
 
 switchesVarDefaults = (
-    (('-l', '--listenPort') ,'listenPort', 50000),
+    (('-l', '--listenPort') ,'listenPort', 50001),
     (('-d', '--debug'), "debug", False), # boolean (set if present)
     (('-?', '--usage'), "usage", False), # boolean (set if present)
     )
